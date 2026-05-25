@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams・OneDrive・SharePoint 活用マニュアル</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #F7F6F3;
+    --bg2: #EEECEA;
+    --bg3: #E4E2DE;
+    --surface: #FFFFFF;
+    --text: #1A1917;
+    --text2: #5C5A56;
+    --text3: #9C9A96;
+    --border: rgba(26,25,23,0.1);
+    --border2: rgba(26,25,23,0.2);
+    --ok-bg: #E3F5EE; --ok-text: #085041; --ok-border: #5DCAA5;
+    --ng-bg: #FAECE7; --ng-text: #4A1B0C; --ng-border: #F0997B;
+    --warn-bg: #FEF3E2; --warn-text: #633806; --warn-border: #EF9F27;
+    --info-bg: #E8F1FB; --info-text: #042C53; --info-border: #85B7EB;
+    --purple-bg: #EEEDFE; --purple-text: #26215C; --purple-border: #AFA9EC;
+    --teams: #5059C9;
+    --onedrive: #0078D4;
+    --sharepoint: #036C70;
+    --radius: 10px;
+    --radius-lg: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans JP', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.7; }
+
+  /* Layout */
+  .page-wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* Header */
+  .page-header { margin-bottom: 48px; }
+  .page-header h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 6px; }
+  .page-header p { font-size: 13px; color: var(--text2); }
+  .header-rule { height: 2px; background: var(--text); margin-top: 20px; }
+
+  /* Chapter heading */
+  .chapter { margin-bottom: 48px; }
+  .chapter-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 0.5px solid var(--border2); }
+  .chapter-num { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; background: var(--text); color: var(--bg); border-radius: 5px; padding: 3px 9px; letter-spacing: 0.04em; white-space: nowrap; }
+  .chapter-title { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+
+  /* Section inside chapter */
+  .sec { margin-bottom: 28px; }
+  .sec-title { font-size: 13px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+
+  /* Divider */
+  .divider { height: 0.5px; background: var(--border); margin: 40px 0; }
+
+  /* Cards row */
+  .cards { display: grid; gap: 10px; }
+  .cards.col2 { grid-template-columns: 1fr 1fr; }
+  .cards.col3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius-lg); padding: 16px 18px; }
+  .card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .card-label { font-size: 15px; font-weight: 700; }
+  .card-sub { font-size: 12px; color: var(--text2); font-weight: 400; }
+  .card-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .card-tag { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 5px; padding: 2px 8px; margin-bottom: 8px; }
+  .tag-chat    { background: #EDE7F6; color: #311B92; }
+  .tag-team    { background: #E3F2FD; color: #0D47A1; }
+  .tag-channel { background: #E8F5E9; color: #1B5E20; }
+
+  /* Use-case rows */
+  .usecase { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .uc-card { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius); padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .uc-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .uc-text { display: flex; flex-direction: column; gap: 3px; }
+  .uc-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .uc-desc  { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+  /* Structure diagram (teams hierarchy) */
+  .struct { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius-lg); padding: 20px; }
+  .struct-team { border: 1.5px solid #5059C9; border-radius: 12px; padding: 14px 16px; margin-bottom: 0; }
+  .struct-team-head { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .struct-team-icon { width: 28px; height: 28px; background: #5059C9; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .struct-team-label { font-size: 14px; font-weight: 700; color: #5059C9; }
+  .struct-team-sub { font-size: 12px; color: var(--text2); margin-top: 1px; }
+  .struct-channels { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .struct-channel { background: var(--bg); border: 0.5px solid var(--border2); border-radius: 9px; padding: 10px 12px; }
+  .struct-channel-head { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .struct-channel-icon { font-size: 13px; }
+  .struct-channel-label { font-size: 13px; font-weight: 700; color: var(--text); }
+  .struct-channel-body { font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .struct-note { font-size: 12px; color: var(--text3); margin-top: 10px; text-align: center; }
+
+  /* Compare table */
+  .tbl-wrap { overflow-x: auto; border-radius: var(--radius-lg); border: 0.5px solid var(--border2); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); }
+  th { background: var(--bg2); padding: 10px 14px; text-align: left; font-weight: 700; font-size: 12px; color: var(--text2); border-bottom: 0.5px solid var(--border2); }
+  td { padding: 11px 14px; border-bottom: 0.5px solid var(--border); color: var(--text); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg); }
+
+  /* Badge */
+  .badge { display: inline-flex; align-items: center; gap: 3px; border-radius: 5px; padding: 2px 8px; font-size: 12px; font-weight: 700; }
+  .badge-ok   { background: var(--ok-bg);   color: var(--ok-text); }
+  .badge-ng   { background: var(--ng-bg);   color: var(--ng-text); }
+  .badge-warn { background: var(--warn-bg); color: var(--warn-text); }
+  .badge-info { background: var(--info-bg); color: var(--info-text); }
+  .badge-dash { color: var(--text3); font-size: 12px; }
+
+  /* Note */
+  .note { border-radius: 0 8px 8px 0; padding: 9px 13px; font-size: 12px; line-height: 1.65; border-left: 3px solid var(--border2); background: var(--bg2); color: var(--text2); margin-top: 10px; }
+  .note.ok   { border-color: var(--ok-border);   background: var(--ok-bg);   color: var(--ok-text); }
+  .note.ng   { border-color: var(--ng-border);   background: var(--ng-bg);   color: var(--ng-text); }
+  .note.warn { border-color: var(--warn-border); background: var(--warn-bg); color: var(--warn-text); }
+  .note.info { border-color: var(--info-border); background: var(--info-bg); color: var(--info-text); }
+
+  /* File flow */
+  .flow-row { display: flex; align-items: center; gap: 0; flex-wrap: wrap; }
+  .flow-node { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius); padding: 10px 14px; text-align: center; min-width: 110px; }
+  .flow-node.teams    { border-color: #5059C9; background: #ECEEFF; }
+  .flow-node.onedrive { border-color: #0078D4; background: #E3F2FD; }
+  .flow-node.sp       { border-color: #036C70; background: #E0F2F1; }
+  .flow-node-label { font-size: 13px; font-weight: 700; }
+  .flow-node-sub   { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .flow-arrow { font-size: 20px; color: var(--text3); padding: 0 8px; flex-shrink: 0; }
+  .flow-label-wrap { display: flex; flex-direction: column; align-items: center; }
+  .flow-label { font-size: 11px; color: var(--text2); margin-bottom: 2px; }
+
+  /* OneDrive/SP relationship diagram */
+  .rel-wrap { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 0; align-items: center; }
+  .rel-box { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius-lg); padding: 16px; }
+  .rel-box-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .rel-box-icon { width: 30px; height: 30px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .rel-box-label { font-size: 14px; font-weight: 700; }
+  .rel-box-items { display: flex; flex-direction: column; gap: 5px; }
+  .rel-item { font-size: 12px; color: var(--text2); display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
+  .rel-item::before { content: '•'; flex-shrink: 0; margin-top: 1px; }
+  .rel-center { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 20px; color: var(--text3); }
+  .rel-center-text { font-size: 11px; color: var(--text3); text-align: center; }
+
+  /* Permission table */
+  .perm-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .perm-card { border-radius: var(--radius); overflow: hidden; border: 0.5px solid var(--border2); }
+  .perm-head { padding: 10px 14px; font-size: 13px; font-weight: 700; }
+  .perm-head.view { background: var(--ok-bg); color: var(--ok-text); }
+  .perm-head.edit { background: var(--warn-bg); color: var(--warn-text); }
+  .perm-head.any  { background: var(--ng-bg); color: var(--ng-text); }
+  .perm-body { padding: 12px 14px; background: var(--surface); display: flex; flex-direction: column; gap: 6px; }
+  .perm-item { font-size: 12px; color: var(--text2); display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
+  .perm-item .ok  { color: var(--ok-text); font-weight: 700; flex-shrink: 0; }
+  .perm-item .ng  { color: var(--ng-text); font-weight: 700; flex-shrink: 0; }
+  .perm-item .neu { color: var(--text3); font-weight: 700; flex-shrink: 0; }
+
+  /* QA */
+  .qa-list { display: flex; flex-direction: column; gap: 10px; }
+  .qa-item { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius); overflow: hidden; }
+  .qa-q { padding: 13px 16px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; }
+  .qa-q:hover { background: var(--bg); }
+  .qa-q-text { display: flex; align-items: center; gap: 8px; }
+  .qa-q-badge { font-size: 11px; font-weight: 700; background: var(--bg2); color: var(--text2); border-radius: 5px; padding: 2px 7px; flex-shrink: 0; }
+  .qa-chevron { font-size: 16px; color: var(--text3); transition: transform .2s; flex-shrink: 0; }
+  .qa-chevron.open { transform: rotate(180deg); }
+  .qa-a { display: none; padding: 0 16px 14px; font-size: 13px; color: var(--text2); line-height: 1.7; border-top: 0.5px solid var(--border); }
+  .qa-a.open { display: block; }
+  .qa-a-inner { padding-top: 12px; }
+
+  /* Rule box */
+  .rule-box { background: var(--surface); border: 0.5px solid var(--border2); border-radius: var(--radius-lg); overflow: hidden; }
+  .rule-head { padding: 10px 16px; font-size: 12px; font-weight: 700; background: var(--text); color: var(--bg); letter-spacing: 0.04em; }
+  .rule-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .rule-item { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.6; }
+  .rule-num { font-family: 'DM Mono', monospace; font-size: 11px; background: var(--bg2); color: var(--text2); border-radius: 4px; padding: 1px 6px; flex-shrink: 0; margin-top: 2px; }
+
+  /* Footer */
+  .page-footer { margin-top: 56px; padding-top: 16px; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--text3); text-align: center; }
+
+  @media (max-width: 640px) {
+    .cards.col2, .cards.col3, .usecase, .perm-grid { grid-template-columns: 1fr; }
+    .struct-channels { grid-template-columns: 1fr; }
+    .rel-wrap { grid-template-columns: 1fr; }
+    .rel-center { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Header -->
+  <header class="page-header">
+    <h1>Teams・OneDrive・SharePoint<br>活用マニュアル</h1>
+    <p>基本の概念から共有ルールまで — 全社員向け利用ガイド</p>
+    <div class="header-rule"></div>
+  </header>
+
+  <!-- ===== 第1章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 01</span>
+      <span class="chapter-title">Teamsの基本構造</span>
+    </div>
+
+    <!-- チャット・チーム・チャネルの違い -->
+    <div class="sec">
+      <p class="sec-title">チャット・チーム・チャネルの違い</p>
+      <div class="cards col3">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#EDE7F6;">💬</div>
+            <div>
+              <div class="card-label">チャット</div>
+              <div class="card-sub">1対1 または 少人数</div>
+            </div>
+          </div>
+          <span class="card-tag tag-chat">プライベート</span>
+          <div class="card-body">特定の相手と直接やりとりする場所。メッセージは参加者のみに見える。メールの代替として使う。ファイルはOneDriveに保存される。</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E3F2FD;">🏢</div>
+            <div>
+              <div class="card-label">チーム</div>
+              <div class="card-sub">部署・プロジェクト単位</div>
+            </div>
+          </div>
+          <span class="card-tag tag-team">グループ</span>
+          <div class="card-body">共通の目的を持つメンバーが集まる箱。複数のチャネルを持つことができる。チームのファイルはSharePointに保存される。</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E8F5E9;">📂</div>
+            <div>
+              <div class="card-label">チャネル</div>
+              <div class="card-sub">話題・テーマ別の仕切り</div>
+            </div>
+          </div>
+          <span class="card-tag tag-channel">チーム内</span>
+          <div class="card-body">チームの中にある「トピック別の部屋」。例：全体連絡・業務報告・プロジェクトA など。チームメンバー全員が見られる（プライベートチャネルを除く）。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 構造図 -->
+    <div class="sec">
+      <p class="sec-title">チームとチャネルの構造イメージ</p>
+      <div class="struct">
+        <div class="struct-team">
+          <div class="struct-team-head">
+            <div class="struct-team-icon">🏢</div>
+            <div>
+              <div class="struct-team-label">チーム：営業部</div>
+              <div class="struct-team-sub">メンバー：営業部全員</div>
+            </div>
+          </div>
+          <div class="struct-channels">
+            <div class="struct-channel">
+              <div class="struct-channel-head">
+                <span class="struct-channel-icon">📢</span>
+                <span class="struct-channel-label">全体連絡</span>
+              </div>
+              <div class="struct-channel-body">お知らせや共有事項を投稿する。全員が見る場所。</div>
+            </div>
+            <div class="struct-channel">
+              <div class="struct-channel-head">
+                <span class="struct-channel-icon">📋</span>
+                <span class="struct-channel-label">業務報告</span>
+              </div>
+              <div class="struct-channel-body">日報・週報など定期的な報告を投稿する。</div>
+            </div>
+            <div class="struct-channel">
+              <div class="struct-channel-head">
+                <span class="struct-channel-icon">🔒</span>
+                <span class="struct-channel-label">マネージャー専用</span>
+              </div>
+              <div class="struct-channel-body">プライベートチャネル。特定メンバーのみ参加・閲覧できる。</div>
+            </div>
+          </div>
+        </div>
+        <p class="struct-note">チーム＝部署の箱　／　チャネル＝その中のトピック別の部屋</p>
+      </div>
+    </div>
+
+    <!-- 使い分け -->
+    <div class="sec">
+      <p class="sec-title">チャット vs チャネル投稿 — 使い分けの基準</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>状況</th>
+              <th>使うべき場所</th>
+              <th>理由</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>特定の1人に質問・依頼する</td>
+              <td><span class="badge badge-info">💬 チャット</span></td>
+              <td>本人にだけ届けばよい内容</td>
+            </tr>
+            <tr>
+              <td>チーム全体に連絡・報告する</td>
+              <td><span class="badge" style="background:#E8F5E9;color:#1B5E20;">📂 チャネル投稿</span></td>
+              <td>記録として残し、全員が参照できる</td>
+            </tr>
+            <tr>
+              <td>会議の議事録・資料を共有する</td>
+              <td><span class="badge" style="background:#E8F5E9;color:#1B5E20;">📂 チャネル投稿</span></td>
+              <td>ファイルがSharePointに蓄積される</td>
+            </tr>
+            <tr>
+              <td>急ぎの連絡・雑談</td>
+              <td><span class="badge badge-info">💬 チャット</span></td>
+              <td>リアルタイムのやりとりに向いている</td>
+            </tr>
+            <tr>
+              <td>後から検索・参照したい情報</td>
+              <td><span class="badge" style="background:#E8F5E9;color:#1B5E20;">📂 チャネル投稿</span></td>
+              <td>チャットは埋もれやすい</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note info">💡 迷ったら「チームメンバー全員が見る必要があるか」で判断。あれば→チャネル、なければ→チャット</div>
+    </div>
+
+    <!-- チームとチャネルの作り方 -->
+    <div class="sec">
+      <p class="sec-title">チームとチャネルの作り方</p>
+      <div class="cards col2">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E3F2FD;">🏢</div>
+            <div><div class="card-label">チームを作る</div></div>
+          </div>
+          <div class="card-body">
+            <ol style="padding-left:16px; display:flex; flex-direction:column; gap:5px; font-size:13px; color:var(--text2);">
+              <li>左サイドバーの「Teams」を開く</li>
+              <li>「チームに参加、またはチームを作成」をクリック</li>
+              <li>「チームを作成」→「最初から」を選ぶ</li>
+              <li>チーム名・説明を入力し、プライバシーを選択（<strong>プライベート推奨</strong>）</li>
+              <li>メンバーを追加して「閉じる」で完了</li>
+            </ol>
+          </div>
+          <div class="note warn" style="margin-top:8px;">⚠ プライバシー設定は作成時に必ず確認。パブリックにすると社内全員が参照・参加できます。</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E8F5E9;">📂</div>
+            <div><div class="card-label">チャネルを追加する</div></div>
+          </div>
+          <div class="card-body">
+            <ol style="padding-left:16px; display:flex; flex-direction:column; gap:5px; font-size:13px; color:var(--text2);">
+              <li>対象のチーム名の横にある「…」をクリック</li>
+              <li>「チャネルを追加」を選ぶ</li>
+              <li>チャネル名・説明を入力</li>
+              <li>プライバシーを選択（標準 or プライベート）</li>
+              <li>「追加」で完了</li>
+            </ol>
+          </div>
+          <div class="note info" style="margin-top:8px;">💡 チャネルはトピック別に分けると会話が整理されます。増えすぎに注意。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Public/Privateの使い分け -->
+    <div class="sec">
+      <p class="sec-title">パブリックとプライベートの使い分け（社内）</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>パブリック（標準）</th>
+              <th>プライベート</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>見られる人</strong></td>
+              <td>社内の全員（検索で見つけられる）</td>
+              <td>招待されたメンバーのみ</td>
+            </tr>
+            <tr>
+              <td><strong>参加方法</strong></td>
+              <td>自由に参加できる</td>
+              <td>所有者が招待・承認</td>
+            </tr>
+            <tr>
+              <td><strong>向いている用途</strong></td>
+              <td>部署横断の情報共有、全社連絡、オープンなプロジェクト</td>
+              <td>人事・経営情報、限定メンバーのプロジェクト、機密性の高いやりとり</td>
+            </tr>
+            <tr>
+              <td><strong>ファイルの共有範囲</strong></td>
+              <td>チームメンバー全員がアクセス可（権限設定による）</td>
+              <td>招待メンバーのみアクセス可</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note info" style="margin-top:10px;">💡 迷ったら「このやりとりや資料を見てほしくない人が社内にいるか？」で判断。いればプライベート、全員に開放でよければパブリック。</div>
+      <div style="margin-top:12px;">
+        <div class="rule-box">
+          <div class="rule-head">作成後にプライバシー設定を確認・変更する（所有者のみ）</div>
+          <div class="rule-body">
+            <div class="rule-item"><span class="rule-num">01</span>左メニューの「Teams」を開き、対象チームの「…」→「チームを管理」をクリック</div>
+            <div class="rule-item"><span class="rule-num">02</span>「設定」タブを開き、「チームの詳細を編集」をクリック</div>
+            <div class="rule-item"><span class="rule-num">03</span>プライバシーの欄を確認し、「プライベート」になっていなければ変更して保存</div>
+          </div>
+        </div>
+        <div class="note warn" style="margin-top:8px;">⚠ メンバーは確認のみ可能で変更はできません。パブリックになっていた場合は所有者に変更を依頼してください。</div>
+      </div>
+    </div>
+
+    <!-- チームの管理 -->
+    <div class="sec">
+      <p class="sec-title">チームを管理する</p>
+      <div class="rule-box">
+        <div class="rule-head">メンバー追加・削除・設定変更（所有者のみ）</div>
+        <div class="rule-body">
+          <div class="rule-item"><span class="rule-num">01</span>対象のチーム名横の「…」→「チームを管理」をクリック</div>
+          <div class="rule-item"><span class="rule-num">02</span>「メンバー」タブからメンバーの追加・削除・役割変更（所有者/メンバー）ができる</div>
+          <div class="rule-item"><span class="rule-num">03</span>「設定」タブからチーム名・説明・アイコン・権限の変更ができる</div>
+          <div class="rule-item"><span class="rule-num">04</span>不要になったチームは「…」→「チームを削除」で削除する（所有者のみ操作可）</div>
+        </div>
+      </div>
+      <div class="note info" style="margin-top:8px;">💡 誰でも自由にチームを作成できます。使わなくなったチームは整理・削除してください。</div>
+    </div>
+
+    <!-- メンション -->
+    <div class="sec">
+      <p class="sec-title">メンション（@）の使い方</p>
+      <div class="cards col3">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#FFF3E0;">👤</div>
+            <div><div class="card-label">@名前</div><div class="card-sub">特定の人に通知</div></div>
+          </div>
+          <div class="card-body">その人だけに通知が届く。「対応してほしい人」を明示するときに使う。</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E8F5E9;">📂</div>
+            <div><div class="card-label">@チャネル名</div><div class="card-sub">チャネル参加者全員に通知</div></div>
+          </div>
+          <div class="card-body">そのチャネルを見ているメンバー全員に通知。重要なお知らせに使う。</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E3F2FD;">🏢</div>
+            <div><div class="card-label">@チーム名</div><div class="card-sub">チーム全員に通知</div></div>
+          </div>
+          <div class="card-body">チームの全メンバーに通知。頻繁に使うと通知疲れを招くので重要な場面のみに。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 返信 vs 新規メッセージ -->
+    <div class="sec">
+      <p class="sec-title">「返信」と「新規メッセージ」の違い</p>
+      <div class="cards col2">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E8F5E9; font-size:14px;">↩️</div>
+            <div><div class="card-label">返信</div><div class="card-sub">スレッドの中で続ける</div></div>
+          </div>
+          <div class="card-body">既存の投稿に紐づいた返信。会話がスレッドとしてまとまるため、後から見返しやすい。<br><br><strong>→ 既存の話題を続けるときは必ず「返信」を使う</strong></div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#FFF3E0; font-size:14px;">✏️</div>
+            <div><div class="card-label">新規メッセージ</div><div class="card-sub">新しいスレッドを始める</div></div>
+          </div>
+          <div class="card-body">別のトピックを新たに始めるときに使う。既存スレッドへの返信を新規投稿してしまうと、会話が分断されて読みにくくなる。<br><br><strong>→ 話題が変わるときだけ新規投稿する</strong></div>
+        </div>
+      </div>
+      <div class="note warn">⚠ よくあるミス：チャネルに返信せず新規メッセージで送ってしまい、会話がバラバラになる。同じ話題は必ず「返信」でまとめてください。</div>
+    </div>
+
+    <!-- Web会議の始め方 -->
+    <div class="sec">
+      <p class="sec-title">Web会議の始め方</p>
+      <div class="cards col3">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E8F5E9; font-size:15px;">📅</div>
+            <div><div class="card-label">会議を予約して始める</div><div class="card-sub">事前に予定を組む場合</div></div>
+          </div>
+          <div class="card-body">
+            <ol style="padding-left:16px; display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--text2);">
+              <li>Teamsカレンダーを開く</li>
+              <li>「新しい会議」をクリック</li>
+              <li>タイトル・日時・参加者を入力</li>
+              <li>「送信」で招待メールが送られる</li>
+              <li>当日、カレンダーから「参加」をクリック</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E3F2FD; font-size:15px;">⚡</div>
+            <div><div class="card-label">今すぐ会議を始める</div><div class="card-sub">即時に呼びかける場合</div></div>
+          </div>
+          <div class="card-body">
+            <ol style="padding-left:16px; display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--text2);">
+              <li>チャットまたはチャネルを開く</li>
+              <li>メッセージ入力欄の「ビデオカメラ」アイコンをクリック</li>
+              <li>「今すぐ会議」を選択</li>
+              <li>会議が開始され、相手に通知が届く</li>
+            </ol>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#FFF3E0; font-size:15px;">🔗</div>
+            <div><div class="card-label">リンクを送って参加してもらう</div><div class="card-sub">外部の人を招待する場合</div></div>
+          </div>
+          <div class="card-body">
+            <ol style="padding-left:16px; display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--text2);">
+              <li>会議を予約して「会議のリンクをコピー」</li>
+              <li>メールやチャットでリンクを送付</li>
+              <li>相手はTeamsアカウントなしでもブラウザから参加可能</li>
+            </ol>
+          </div>
+          <div class="note warn" style="margin-top:8px;">⚠ 外部参加者は「ロビー」で待機します。ホストが許可するまで入室できません。</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== 第2章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 02</span>
+      <span class="chapter-title">ファイルの在り処と構造</span>
+    </div>
+
+    <!-- OneDrive vs SharePoint -->
+    <div class="sec">
+      <p class="sec-title">OneDrive と SharePoint の関係</p>
+      <div class="rel-wrap">
+        <div class="rel-box">
+          <div class="rel-box-head">
+            <div class="rel-box-icon" style="background:#E3F2FD;">☁️</div>
+            <div>
+              <div class="rel-box-label" style="color:#0078D4;">OneDrive</div>
+              <div style="font-size:11px;color:var(--text2);">個人のクラウドストレージ</div>
+            </div>
+          </div>
+          <div class="rel-box-items">
+            <div class="rel-item">自分だけのファイルを保存する場所</div>
+            <div class="rel-item">チャットで送ったファイルはここに保存される</div>
+            <div class="rel-item">他人に共有することもできるが、基本は個人用</div>
+            <div class="rel-item">PCフォルダと同期して使える</div>
+          </div>
+        </div>
+        <div class="rel-center">
+          <span>⇄</span>
+          <span class="rel-center-text">連携して<br>います</span>
+        </div>
+        <div class="rel-box">
+          <div class="rel-box-head">
+            <div class="rel-box-icon" style="background:#E0F2F1;">🏛</div>
+            <div>
+              <div class="rel-box-label" style="color:#036C70;">SharePoint</div>
+              <div style="font-size:11px;color:var(--text2);">チーム共有のストレージ</div>
+            </div>
+          </div>
+          <div class="rel-box-items">
+            <div class="rel-item">チーム・部署で共有するファイルの置き場所</div>
+            <div class="rel-item">Teamsのチャネルで共有したファイルはここに保存される</div>
+            <div class="rel-item">チームメンバーなら基本的にアクセスできる（権限設定で制限も可能）</div>
+            <div class="rel-item">社内の情報資産として管理・蓄積される</div>
+          </div>
+        </div>
+      </div>
+      <div class="note info">💡 一言で言うと「OneDrive = 自分のデスク引き出し」「SharePoint = チームの共有キャビネット」</div>
+    </div>
+
+    <!-- ファイルがどこに保存されるか -->
+    <div class="sec">
+      <p class="sec-title">Teamsでファイルを送ると、どこに保存される？</p>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+
+        <div style="background:var(--surface); border:0.5px solid var(--border2); border-radius:var(--radius-lg); padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+            <span style="background:#EDE7F6; border-radius:5px; padding:2px 8px; font-size:11px; color:#311B92;">チャットで送信</span>
+            ファイルの行き先
+          </div>
+          <div class="flow-row">
+            <div class="flow-node teams">
+              <div class="flow-node-label" style="color:#5059C9;">💬 チャット</div>
+              <div class="flow-node-sub">でファイルを添付</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node onedrive">
+              <div class="flow-node-label" style="color:#0078D4;">☁️ OneDrive</div>
+              <div class="flow-node-sub">送った本人のストレージ</div>
+            </div>
+          </div>
+          <div class="note" style="margin-top:10px;">ファイルの実体は送信者のOneDriveにあります。送信者がファイルを削除すると、共有リンク経由での閲覧はできなくなります。ただし相手がすでにダウンロードしたファイルはそのまま手元に残ります。</div>
+        </div>
+
+        <div style="background:var(--surface); border:0.5px solid var(--border2); border-radius:var(--radius-lg); padding:16px 18px;">
+          <div style="font-size:13px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+            <span style="background:#E8F5E9; border-radius:5px; padding:2px 8px; font-size:11px; color:#1B5E20;">チャネル投稿で送信</span>
+            ファイルの行き先
+          </div>
+          <div class="flow-row">
+            <div class="flow-node teams">
+              <div class="flow-node-label" style="color:#5059C9;">📂 チャネル</div>
+              <div class="flow-node-sub">でファイルを添付</div>
+            </div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node sp">
+              <div class="flow-node-label" style="color:#036C70;">🏛 SharePoint</div>
+              <div class="flow-node-sub">チームの共有ストレージ</div>
+            </div>
+          </div>
+          <div class="note ok" style="margin-top:10px;">チームメンバー全員がアクセス・編集できる共有ファイルになります。社内で共有して残したいファイルはチャネルに投稿するのが基本です。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OneDrive・SharePointへのアクセス方法 -->
+    <div class="sec">
+      <p class="sec-title">OneDrive・SharePoint へのアクセス方法</p>
+      <div class="cards col2">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E3F2FD;">☁️</div>
+            <div><div class="card-label">OneDrive を開く</div><div class="card-sub">自分のファイル置き場</div></div>
+          </div>
+          <div class="card-body">
+            <div style="display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text2);">
+              <div><strong>方法①　ブラウザから</strong><br>
+                <a href="https://onedrive.live.com" style="color:var(--info-text); font-size:12px;">https://onedrive.com</a> にアクセスし、会社アカウントでサインイン</div>
+              <div><strong>方法②　Microsoft 365 ポータルから</strong><br>
+                <a href="https://www.office.com" style="color:var(--info-text); font-size:12px;">https://www.office.com</a> → 左メニューの「OneDrive」をクリック</div>
+              <div><strong>方法③　PCのエクスプローラーから</strong><br>
+                OneDriveアプリが有効なら、エクスプローラーの左側に「OneDrive - 会社名」が表示される</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E0F2F1;">🏛</div>
+            <div><div class="card-label">SharePoint を開く</div><div class="card-sub">チームのファイル置き場</div></div>
+          </div>
+          <div class="card-body">
+            <div style="display:flex; flex-direction:column; gap:6px; font-size:13px; color:var(--text2);">
+              <div><strong>方法①　Teamsのチャネルから</strong><br>
+                チャネルを開く → 上部タブの「共有済み」をクリック → ファイル一覧が表示される</div>
+              <div><strong>方法②　Microsoft 365 ポータルから</strong><br>
+                <a href="https://www.office.com" style="color:var(--info-text); font-size:12px;">https://www.office.com</a> → 左メニューの「SharePoint」をクリック → 参加しているサイトが表示される</div>
+              <div><strong>方法③　ブラウザから直接</strong><br>
+                SharePointサイトのURLが分かれば直接アクセス可</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- どこに置くか判断フロー -->    <div class="sec">
+      <p class="sec-title">ファイルをどこに置くか — 判断の基準</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ファイルの種類</th>
+              <th>置く場所</th>
+              <th>補足</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>自分だけが使う作業中ファイル・下書き</td>
+              <td><span class="badge badge-info">☁️ OneDrive</span></td>
+              <td>自分だけが使い続けるならそのままでOK。共有・引き継ぎが必要になったらSharePointへ移す</td>
+            </tr>
+            <tr>
+              <td>チームで共同編集するファイル</td>
+              <td><span class="badge badge-ok">🏛 SharePoint（チャネル）</span></td>
+              <td>Teamsのチャネル「共有済み」タブから直接アクセス可</td>
+            </tr>
+            <tr>
+              <td>部署の共有資料・マニュアル・テンプレート</td>
+              <td><span class="badge badge-ok">🏛 SharePoint</span></td>
+              <td>社内の情報資産として蓄積・管理する</td>
+            </tr>
+            <tr>
+              <td>一時的に相手1人に送るファイル</td>
+              <td><span class="badge badge-info">💬 チャット添付</span></td>
+              <td>OneDrive経由。重要なファイルはSharePointへ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== 第3章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 03</span>
+      <span class="chapter-title">ファイル共有のルール</span>
+    </div>
+
+    <!-- 社内共有 -->
+    <div class="sec">
+      <p class="sec-title">社内共有の基本</p>
+      <div class="cards col2">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#E8F5E9;">📂</div>
+            <div><div class="card-label">チャネルに投稿する</div><div class="card-sub">推奨：チーム内共有</div></div>
+          </div>
+          <div class="card-body">ファイルをチャネルに投稿すると、チームメンバー全員がSharePointから直接アクセスできます。リンクを別途送る必要がなく、ファイルも一か所にまとまります。</div>
+          <div class="note ok" style="margin-top:8px;">✓ 基本はこちらを使う</div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-icon" style="background:#FFF3E0;">🔗</div>
+            <div><div class="card-label">リンクを共有する</div><div class="card-sub">補助的に使う</div></div>
+          </div>
+          <div class="card-body">ファイルのリンクをチャットやメールで送る方法。チーム外の特定の人に送りたい場合や、すでにSharePointにあるファイルを案内するときに使います。</div>
+          <div class="note warn" style="margin-top:8px;">⚠ リンクの権限設定に注意（後述）</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 外部共有 -->
+    <div class="sec">
+      <p class="sec-title">外部共有の権限と注意点</p>
+      <div class="perm-grid">
+        <div class="perm-card">
+          <div class="perm-head view">✓ 閲覧のみ（推奨）</div>
+          <div class="perm-body">
+            <div class="perm-item"><span class="ok">✓</span>ファイルを見ることができる</div>
+            <div class="perm-item"><span class="ok">✓</span>ダウンロードできる（設定による）</div>
+            <div class="perm-item"><span class="ng">✗</span>内容を編集できない</div>
+            <div class="perm-item"><span class="ng">✗</span>削除できない</div>
+            <div class="perm-item"><span class="ng">✗</span>他の人へ再共有できない</div>
+          </div>
+        </div>
+        <div class="perm-card">
+          <div class="perm-head edit">⚠ 編集可</div>
+          <div class="perm-body">
+            <div class="perm-item"><span class="ok">✓</span>ファイルを見ることができる</div>
+            <div class="perm-item"><span class="ok">✓</span>内容を直接編集できる</div>
+            <div class="perm-item"><span class="ng">✗</span>削除・移動もできてしまう</div>
+            <div class="perm-item"><span class="ng">✗</span>誤って上書きされるリスクあり</div>
+            <div class="perm-item"><span class="neu">△</span>共同編集が必要なときのみ使う</div>
+          </div>
+        </div>
+        <div class="perm-card">
+          <div class="perm-head any">✗ リンクを知っている全員</div>
+          <div class="perm-body">
+            <div class="perm-item"><span class="ng">✗</span>URLを知っていれば誰でもアクセス可</div>
+            <div class="perm-item"><span class="ng">✗</span>誤って拡散される可能性がある</div>
+            <div class="perm-item"><span class="ng">✗</span>社外秘・機密ファイルには絶対に使用しない</div>
+            <div class="perm-item"><span class="neu">△</span>公開情報に限り使用可</div>
+          </div>
+        </div>
+      </div>
+      <div class="note warn" style="margin-top:10px;">⚠ 外部共有のルール：社外に共有する場合は原則「閲覧のみ」に設定してください。「編集可」にする場合は上長の確認を取ること。「リンクを知っている全員」は機密情報には使用禁止です。</div>
+    </div>
+
+    <!-- リンク共有の手順イメージ -->
+    <div class="sec">
+      <p class="sec-title">外部共有リンクの作り方（手順）</p>
+      <div class="rule-box">
+        <div class="rule-head">SharePoint / OneDrive でリンクを作成する手順</div>
+        <div class="rule-body">
+          <div class="rule-item"><span class="rule-num">01</span>共有したいファイルを右クリック →「リンクのコピー」または「共有」を選ぶ</div>
+          <div class="rule-item"><span class="rule-num">02</span>「リンクの設定」で対象を「特定のユーザー」に変更する（「リンクを知っている全員」にしない）</div>
+          <div class="rule-item"><span class="rule-num">03</span>権限を「閲覧」または「編集」から選ぶ（原則：閲覧のみ）</div>
+          <div class="rule-item"><span class="rule-num">04</span>有効期限を設定する（設定できる場合は30日以内を推奨）</div>
+          <div class="rule-item"><span class="rule-num">05</span>「コピー」してメールやチャットで相手に送る</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== 第4章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 04</span>
+      <span class="chapter-title">OneDrive 活用</span>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">OneDrive でできること</p>
+      <div class="usecase">
+        <div class="uc-card">
+          <div class="uc-icon">💾</div>
+          <div class="uc-text">
+            <div class="uc-title">自動バックアップ</div>
+            <div class="uc-desc">PCのデスクトップ・ドキュメントフォルダを自動でクラウドに保存。PCが壊れてもファイルが消えない。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🔄</div>
+          <div class="uc-text">
+            <div class="uc-title">PCと同期して使う</div>
+            <div class="uc-desc">OneDriveアプリを入れるとPCのフォルダとして使える。インターネットがなくてもオフラインで編集できる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">📱</div>
+          <div class="uc-text">
+            <div class="uc-title">どこからでもアクセス</div>
+            <div class="uc-desc">スマホ・タブレット・別のPCからでもブラウザでファイルを確認・編集できる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🤝</div>
+          <div class="uc-text">
+            <div class="uc-title">1対1の一時的な共有</div>
+            <div class="uc-desc">特定の相手に一時的にファイルを共有したい場合に使う。長期的な共有はSharePointへ。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">OneDrive 利用上の注意点</p>
+      <div class="cards col2">
+        <div class="card" style="border-color:var(--warn-border);">
+          <div class="card-head">
+            <div class="card-icon" style="background:var(--warn-bg);">⚠️</div>
+            <div><div class="card-label">退職・異動時の扱い</div></div>
+          </div>
+          <div class="card-body">退職するとOneDriveのファイルは削除されます。チームで使い続けるファイルは、必ずSharePointに移してから引き継ぎを行ってください。</div>
+        </div>
+        <div class="card" style="border-color:var(--warn-border);">
+          <div class="card-head">
+            <div class="card-icon" style="background:var(--warn-bg);">⚠️</div>
+            <div><div class="card-label">社内共有ファイルは置かない</div></div>
+          </div>
+          <div class="card-body">チームで継続的に使うファイルをOneDriveだけに置くのはNG。担当者が不在になると誰もアクセスできなくなります。共有資料はSharePointへ。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== 第5章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 05</span>
+      <span class="chapter-title">SharePoint 活用</span>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">SharePoint でできること</p>
+      <div class="usecase">
+        <div class="uc-card">
+          <div class="uc-icon">🏛</div>
+          <div class="uc-text">
+            <div class="uc-title">チームのファイル一元管理</div>
+            <div class="uc-desc">部署・チームのファイルを一か所で管理。Teamsのチャネル「ファイル」タブから直接アクセスできる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">✏️</div>
+          <div class="uc-text">
+            <div class="uc-title">複数人で同時に編集</div>
+            <div class="uc-desc">Word・Excel・PowerPointをブラウザやアプリで複数人が同時に編集できる。「最新版はどれ？」問題がなくなる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🕐</div>
+          <div class="uc-text">
+            <div class="uc-title">バージョン管理</div>
+            <div class="uc-desc">変更履歴が自動で保存される。誰がいつ何を変更したか確認でき、以前のバージョンに戻すことも可能。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🔐</div>
+          <div class="uc-text">
+            <div class="uc-title">アクセス権管理</div>
+            <div class="uc-desc">フォルダやファイルごとに閲覧・編集できる人を細かく設定できる。機密情報の管理に有効。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">TeamsチャネルとSharePointの関係</p>
+      <div style="background:var(--surface); border:0.5px solid var(--border2); border-radius:var(--radius-lg); padding:18px;">
+        <div style="display:grid; grid-template-columns:1fr 32px 1fr; gap:0; align-items:center;">
+          <div style="text-align:center; padding:16px; background:var(--bg); border-radius:var(--radius); border:0.5px solid var(--border2);">
+            <div style="font-size:20px; margin-bottom:6px;">📂</div>
+            <div style="font-size:13px; font-weight:700; color:#5059C9;">Teamsチャネル</div>
+            <div style="font-size:12px; color:var(--text2); margin-top:4px;">「共有済み」タブ</div>
+          </div>
+          <div style="text-align:center; font-size:18px; color:var(--text3);">⇄</div>
+          <div style="text-align:center; padding:16px; background:var(--bg); border-radius:var(--radius); border:0.5px solid var(--border2);">
+            <div style="font-size:20px; margin-bottom:6px;">🏛</div>
+            <div style="font-size:13px; font-weight:700; color:#036C70;">SharePoint</div>
+            <div style="font-size:12px; color:var(--text2); margin-top:4px;">チームサイト内のフォルダ</div>
+          </div>
+        </div>
+        <div class="note info" style="margin-top:12px;">💡 Teamsのチャネル「共有済み」タブに表示されているファイルは、実際にはSharePointに保存されています。どちらから操作しても同じファイルが変更されます。</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== 第6章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 06</span>
+      <span class="chapter-title">よくある迷いポイント Q&amp;A</span>
+    </div>
+
+    <div class="qa-list">
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            チャットで送るか、チャネルに投稿するか迷う
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>「チームメンバー全員が知るべき内容か」</strong>で判断してください。<br><br>
+            全員が知るべき → <strong>チャネルに投稿</strong>（記録として残る・全員が参照できる）<br>
+            特定の1人・少人数だけでいい → <strong>チャットで送る</strong><br><br>
+            チャットは埋もれやすく、後から検索しにくいため、業務上重要な連絡・資料はチャネルに投稿することをおすすめします。
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            メールで送るか、Teamsで送るか迷う
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>社内のやりとり → Teams、社外とのやりとり → メール</strong>を基本にしてください。<br><br>
+            Teamsは社内コミュニケーションに最適化されており、チャット・ファイル共有・会議がひとまとまりで管理できます。社内でメールを使うと情報が分散し、後から追いにくくなります。<br><br>
+            ただし正式な通知・契約・外部向けのやりとりはメールが適切です。
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            OneDriveに置くか、SharePointに置くか迷う
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>「自分だけが使うか、チームで使うか」</strong>で判断してください。<br><br>
+            自分だけが使う作業中ファイル・下書き → <strong>OneDrive</strong><br>
+            チームで共有・共同編集するファイル → <strong>SharePoint（チャネル）</strong><br><br>
+            OneDriveに置いたファイルは担当者が退職・異動すると消える可能性があります。チームで継続的に使うファイルは必ずSharePointに置いてください。
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            外部にファイルを送るとき、添付とリンク共有どちらがいい？
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>状況によりますが、基本はリンク共有が便利です。</strong><br><br>
+            添付ファイル：メールの容量制限に引っかかる場合がある。受け取った側が古いバージョンを保持してしまう。<br><br>
+            リンク共有：ファイルを更新すれば相手も常に最新版を見られる。ただし権限設定（閲覧のみ推奨）を必ず確認すること。<br><br>
+            機密性の高いファイルを外部に送る場合は、上長に確認のうえ送付してください。
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            Teamsのチャネルの「共有済み」タブとSharePointの違いは？
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>実質的に同じファイルを見ています。</strong><br><br>
+            Teamsのチャネルにある「共有済み」タブは、SharePointのチームサイト内のフォルダをTeams上で表示しているものです。どちらから操作しても同じファイルが変更されます。<br><br>
+            日常的な操作はTeamsの「共有済み」タブから行えばOKです。より細かいフォルダ管理やアクセス権設定はSharePointのサイトから行います。
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            共有したリンクを後から取り消せる？
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>はい、取り消せます。</strong><br><br>
+            SharePointまたはOneDriveでファイルを右クリック →「アクセスの管理」→ 共有リンクを削除することで無効にできます。<br><br>
+            外部共有後に「やっぱりアクセスさせたくない」となった場合はすぐに無効化できます。有効期限を設定しておくと自動で無効になるため、外部共有時は期限設定を習慣にしてください。
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            投稿に気づかない、または通知が多すぎて困る
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>チャネルごとに通知設定をカスタマイズしてください。</strong><br><br>
+            <strong>【特定のチャネルの通知を変更する】</strong><br>
+            ① 対象チャネルの名前横にある「…」をクリック<br>
+            ② 「チャネルの通知」を選択<br>
+            ③ 「すべてのアクティビティ」「@メンションのみ」「オフ」から選ぶ<br><br>
+            <strong>【全体の通知設定を変更する】</strong><br>
+            ① 右上のプロフィールアイコン →「設定」を開く<br>
+            ② 「通知」タブを選択<br>
+            ③ チャット・メンション・返信などカテゴリごとに通知方法を調整できる<br><br>
+            <div class="note info" style="margin-top:4px;">💡 重要なチャネルは「すべてのアクティビティ」、参考程度のチャネルは「@メンションのみ」に設定するのがおすすめです。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-q" onclick="toggleQA(this)">
+          <div class="qa-q-text">
+            <span class="qa-q-badge">Q</span>
+            チャットにファイルを送ったら「アクセス権がない」と言われました
+          </div>
+          <span class="qa-chevron">▾</span>
+        </div>
+        <div class="qa-a">
+          <div class="qa-a-inner">
+            <strong>OneDrive上のファイルのアクセス権を確認してください。</strong><br><br>
+            チャットで送ったファイルはOneDriveに保存され、相手に共有リンクが届きます。以下の場合にアクセスできなくなります。<br><br>
+            <strong>【原因① ファイルのアクセス権が「自分専用」になっている】</strong><br>
+            ① OneDriveでファイルを右クリック →「アクセスの管理」を開く<br>
+            ② 相手のメールアドレスが表示されているか確認<br>
+            ③ 表示されていなければ「共有」から相手を追加する<br><br>
+            <strong>【原因② 相手が組織外（ゲスト）の場合】</strong><br>
+            ① 同様に「アクセスの管理」を開く<br>
+            ② 「リンクの設定」で「特定のユーザー」を選び、相手のメールアドレスを入力<br>
+            ③ または権限を「組織外のユーザーも含む」に変更する（機密情報は避ける）<br><br>
+            <div class="note warn" style="margin-top:4px;">⚠ ファイルを送信者が削除した場合も相手はアクセスできなくなります。重要なファイルはSharePointに置いてチャネルで共有するほうが確実です。</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    Teams・OneDrive・SharePoint 活用マニュアル　／　不明点は社内担当者へお問い合わせください
+  </footer>
+
+</div>
+
+<script>
+function toggleQA(el) {
+  const answer = el.nextElementSibling;
+  const chevron = el.querySelector('.qa-chevron');
+  const isOpen = answer.classList.contains('open');
+  answer.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>
