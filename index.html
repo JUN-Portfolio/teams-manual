@@ -258,7 +258,7 @@
                 <span class="struct-channel-icon">📢</span>
                 <span class="struct-channel-label">全体連絡</span>
               </div>
-              <div class="struct-channel-body">お知らせや共有事項を投稿する。全員が見る場所。</div>
+              <div class="struct-channel-body">お知らせや共有事項を投稿する。<br>全員が見る場所。</div>
             </div>
             <div class="struct-channel">
               <div class="struct-channel-head">
@@ -335,10 +335,9 @@
           </div>
           <div class="card-body">
             <ol style="padding-left:16px; display:flex; flex-direction:column; gap:5px; font-size:13px; color:var(--text2);">
-              <li>左サイドバーの「Teams」を開く</li>
-              <li>「チームに参加、またはチームを作成」をクリック</li>
-              <li>「チームを作成」→「最初から」を選ぶ</li>
-              <li>チーム名・説明を入力し、プライバシーを選択（<strong>プライベート推奨</strong>）</li>
+              <li>左サイドバーの「チーム」を開く</li>
+              <li>新しいアイテムから「チームに参加」か「新しいチーム」をクリック</li>
+              <li>「新しいチーム」→ チーム名・説明を入力し、プライバシーを選択（<strong>プライベート推奨</strong>）</li>
               <li>メンバーを追加して「閉じる」で完了</li>
             </ol>
           </div>
@@ -388,8 +387,20 @@
             </tr>
             <tr>
               <td><strong>向いている用途</strong></td>
-              <td>部署横断の情報共有、全社連絡、オープンなプロジェクト</td>
-              <td>人事・経営情報、限定メンバーのプロジェクト、機密性の高いやりとり</td>
+              <td>
+                <ul style="padding-left:16px; margin:0; display:flex; flex-direction:column; gap:2px;">
+                  <li>部署横断の情報共有</li>
+                  <li>全社連絡</li>
+                  <li>オープンなプロジェクト</li>
+                </ul>
+              </td>
+              <td>
+                <ul style="padding-left:16px; margin:0; display:flex; flex-direction:column; gap:2px;">
+                  <li>人事・経営情報</li>
+                  <li>限定メンバーのプロジェクト</li>
+                  <li>機密性の高いやりとり</li>
+                </ul>
+              </td>
             </tr>
             <tr>
               <td><strong>ファイルの共有範囲</strong></td>
@@ -490,7 +501,7 @@
           <div class="card-body">
             <ol style="padding-left:16px; display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--text2);">
               <li>Teamsカレンダーを開く</li>
-              <li>「新しい会議」をクリック</li>
+              <li>右上の「新規（イベント）」をクリック</li>
               <li>タイトル・日時・参加者を入力</li>
               <li>「送信」で招待メールが送られる</li>
               <li>当日、カレンダーから「参加」をクリック</li>
@@ -505,8 +516,8 @@
           <div class="card-body">
             <ol style="padding-left:16px; display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--text2);">
               <li>チャットまたはチャネルを開く</li>
-              <li>メッセージ入力欄の「ビデオカメラ」アイコンをクリック</li>
-              <li>「今すぐ会議」を選択</li>
+              <li>右上の「ビデオ通話」アイコンをクリック</li>
+              <li>チャネルの場合は「今すぐ参加」を選択</li>
               <li>会議が開始され、相手に通知が届く</li>
             </ol>
           </div>
@@ -518,7 +529,8 @@
           </div>
           <div class="card-body">
             <ol style="padding-left:16px; display:flex; flex-direction:column; gap:4px; font-size:13px; color:var(--text2);">
-              <li>会議を予約して「会議のリンクをコピー」</li>
+              <li>Teams会議をオンにして新規イベントを予約</li>
+              <li>参加のプルダウンから「参加リンクをコピー」</li>
               <li>メールやチャットでリンクを送付</li>
               <li>相手はTeamsアカウントなしでもブラウザから参加可能</li>
             </ol>
@@ -536,6 +548,134 @@
   <section class="chapter">
     <div class="chapter-header">
       <span class="chapter-num">CHAPTER 02</span>
+      <span class="chapter-title">OneDrive 活用</span>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">OneDrive でできること</p>
+      <div class="usecase">
+        <div class="uc-card">
+          <div class="uc-icon">💾</div>
+          <div class="uc-text">
+            <div class="uc-title">自動バックアップ</div>
+            <div class="uc-desc">PCのデスクトップ・ドキュメントフォルダを自動でクラウドに保存。PCが壊れてもファイルが消えない。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🔄</div>
+          <div class="uc-text">
+            <div class="uc-title">PCと同期して使う</div>
+            <div class="uc-desc">OneDriveアプリを入れるとPCのフォルダとして使える。インターネットがなくてもオフラインで編集できる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">📱</div>
+          <div class="uc-text">
+            <div class="uc-title">どこからでもアクセス</div>
+            <div class="uc-desc">スマホ・タブレット・別のPCからでもブラウザでファイルを確認・編集できる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🤝</div>
+          <div class="uc-text">
+            <div class="uc-title">1対1の一時的な共有</div>
+            <div class="uc-desc">特定の相手に一時的にファイルを共有したい場合に使う。長期的な共有はSharePointへ。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">OneDrive 利用上の注意点</p>
+      <div class="cards col2">
+        <div class="card" style="border-color:var(--warn-border);">
+          <div class="card-head">
+            <div class="card-icon" style="background:var(--warn-bg);">⚠️</div>
+            <div><div class="card-label">退職・異動時の扱い</div></div>
+          </div>
+          <div class="card-body">退職するとOneDriveのファイルは削除されます。チームで使い続けるファイルは、必ずSharePointに移してから引き継ぎを行ってください。</div>
+        </div>
+        <div class="card" style="border-color:var(--warn-border);">
+          <div class="card-head">
+            <div class="card-icon" style="background:var(--warn-bg);">⚠️</div>
+            <div><div class="card-label">社内共有ファイルは置かない</div></div>
+          </div>
+          <div class="card-body">チームで継続的に使うファイルをOneDriveだけに置くのはNG。担当者が不在になると誰もアクセスできなくなります。共有資料はSharePointへ。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== 第3章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 03</span>
+      <span class="chapter-title">SharePoint 活用</span>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">SharePoint でできること</p>
+      <div class="usecase">
+        <div class="uc-card">
+          <div class="uc-icon">🏛</div>
+          <div class="uc-text">
+            <div class="uc-title">チームのファイル一元管理</div>
+            <div class="uc-desc">部署・チームのファイルを一か所で管理。Teamsのチャネル「ファイル」タブから直接アクセスできる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">✏️</div>
+          <div class="uc-text">
+            <div class="uc-title">複数人で同時に編集</div>
+            <div class="uc-desc">Word・Excel・PowerPointをブラウザやアプリで複数人が同時に編集できる。「最新版はどれ？」問題がなくなる。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🕐</div>
+          <div class="uc-text">
+            <div class="uc-title">バージョン管理</div>
+            <div class="uc-desc">変更履歴が自動で保存される。誰がいつ何を変更したか確認でき、以前のバージョンに戻すことも可能。</div>
+          </div>
+        </div>
+        <div class="uc-card">
+          <div class="uc-icon">🔐</div>
+          <div class="uc-text">
+            <div class="uc-title">アクセス権管理</div>
+            <div class="uc-desc">フォルダやファイルごとに閲覧・編集できる人を細かく設定できる。機密情報の管理に有効。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-title">TeamsチャネルとSharePointの関係</p>
+      <div style="background:var(--surface); border:0.5px solid var(--border2); border-radius:var(--radius-lg); padding:18px;">
+        <div style="display:grid; grid-template-columns:1fr 32px 1fr; gap:0; align-items:center;">
+          <div style="text-align:center; padding:16px; background:var(--bg); border-radius:var(--radius); border:0.5px solid var(--border2);">
+            <div style="font-size:20px; margin-bottom:6px;">📂</div>
+            <div style="font-size:13px; font-weight:700; color:#5059C9;">Teamsチャネル</div>
+            <div style="font-size:12px; color:var(--text2); margin-top:4px;">「共有済み」タブ</div>
+          </div>
+          <div style="text-align:center; font-size:18px; color:var(--text3);">⇄</div>
+          <div style="text-align:center; padding:16px; background:var(--bg); border-radius:var(--radius); border:0.5px solid var(--border2);">
+            <div style="font-size:20px; margin-bottom:6px;">🏛</div>
+            <div style="font-size:13px; font-weight:700; color:#036C70;">SharePoint</div>
+            <div style="font-size:12px; color:var(--text2); margin-top:4px;">チームサイト内のフォルダ</div>
+          </div>
+        </div>
+        <div class="note info" style="margin-top:12px;">💡 Teamsのチャネル「共有済み」タブに表示されているファイルは、実際にはSharePointに保存されています。どちらから操作しても同じファイルが変更されます。</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== 第4章 ===== -->
+  <section class="chapter">
+    <div class="chapter-header">
+      <span class="chapter-num">CHAPTER 04</span>
       <span class="chapter-title">ファイルの在り処と構造</span>
     </div>
 
@@ -706,10 +846,10 @@
 
   <div class="divider"></div>
 
-  <!-- ===== 第3章 ===== -->
+  <!-- ===== 第5章 ===== -->
   <section class="chapter">
     <div class="chapter-header">
-      <span class="chapter-num">CHAPTER 03</span>
+      <span class="chapter-num">CHAPTER 05</span>
       <span class="chapter-title">ファイル共有のルール</span>
     </div>
 
@@ -785,134 +925,6 @@
           <div class="rule-item"><span class="rule-num">04</span>有効期限を設定する（設定できる場合は30日以内を推奨）</div>
           <div class="rule-item"><span class="rule-num">05</span>「コピー」してメールやチャットで相手に送る</div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ===== 第4章 ===== -->
-  <section class="chapter">
-    <div class="chapter-header">
-      <span class="chapter-num">CHAPTER 04</span>
-      <span class="chapter-title">OneDrive 活用</span>
-    </div>
-
-    <div class="sec">
-      <p class="sec-title">OneDrive でできること</p>
-      <div class="usecase">
-        <div class="uc-card">
-          <div class="uc-icon">💾</div>
-          <div class="uc-text">
-            <div class="uc-title">自動バックアップ</div>
-            <div class="uc-desc">PCのデスクトップ・ドキュメントフォルダを自動でクラウドに保存。PCが壊れてもファイルが消えない。</div>
-          </div>
-        </div>
-        <div class="uc-card">
-          <div class="uc-icon">🔄</div>
-          <div class="uc-text">
-            <div class="uc-title">PCと同期して使う</div>
-            <div class="uc-desc">OneDriveアプリを入れるとPCのフォルダとして使える。インターネットがなくてもオフラインで編集できる。</div>
-          </div>
-        </div>
-        <div class="uc-card">
-          <div class="uc-icon">📱</div>
-          <div class="uc-text">
-            <div class="uc-title">どこからでもアクセス</div>
-            <div class="uc-desc">スマホ・タブレット・別のPCからでもブラウザでファイルを確認・編集できる。</div>
-          </div>
-        </div>
-        <div class="uc-card">
-          <div class="uc-icon">🤝</div>
-          <div class="uc-text">
-            <div class="uc-title">1対1の一時的な共有</div>
-            <div class="uc-desc">特定の相手に一時的にファイルを共有したい場合に使う。長期的な共有はSharePointへ。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sec">
-      <p class="sec-title">OneDrive 利用上の注意点</p>
-      <div class="cards col2">
-        <div class="card" style="border-color:var(--warn-border);">
-          <div class="card-head">
-            <div class="card-icon" style="background:var(--warn-bg);">⚠️</div>
-            <div><div class="card-label">退職・異動時の扱い</div></div>
-          </div>
-          <div class="card-body">退職するとOneDriveのファイルは削除されます。チームで使い続けるファイルは、必ずSharePointに移してから引き継ぎを行ってください。</div>
-        </div>
-        <div class="card" style="border-color:var(--warn-border);">
-          <div class="card-head">
-            <div class="card-icon" style="background:var(--warn-bg);">⚠️</div>
-            <div><div class="card-label">社内共有ファイルは置かない</div></div>
-          </div>
-          <div class="card-body">チームで継続的に使うファイルをOneDriveだけに置くのはNG。担当者が不在になると誰もアクセスできなくなります。共有資料はSharePointへ。</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ===== 第5章 ===== -->
-  <section class="chapter">
-    <div class="chapter-header">
-      <span class="chapter-num">CHAPTER 05</span>
-      <span class="chapter-title">SharePoint 活用</span>
-    </div>
-
-    <div class="sec">
-      <p class="sec-title">SharePoint でできること</p>
-      <div class="usecase">
-        <div class="uc-card">
-          <div class="uc-icon">🏛</div>
-          <div class="uc-text">
-            <div class="uc-title">チームのファイル一元管理</div>
-            <div class="uc-desc">部署・チームのファイルを一か所で管理。Teamsのチャネル「ファイル」タブから直接アクセスできる。</div>
-          </div>
-        </div>
-        <div class="uc-card">
-          <div class="uc-icon">✏️</div>
-          <div class="uc-text">
-            <div class="uc-title">複数人で同時に編集</div>
-            <div class="uc-desc">Word・Excel・PowerPointをブラウザやアプリで複数人が同時に編集できる。「最新版はどれ？」問題がなくなる。</div>
-          </div>
-        </div>
-        <div class="uc-card">
-          <div class="uc-icon">🕐</div>
-          <div class="uc-text">
-            <div class="uc-title">バージョン管理</div>
-            <div class="uc-desc">変更履歴が自動で保存される。誰がいつ何を変更したか確認でき、以前のバージョンに戻すことも可能。</div>
-          </div>
-        </div>
-        <div class="uc-card">
-          <div class="uc-icon">🔐</div>
-          <div class="uc-text">
-            <div class="uc-title">アクセス権管理</div>
-            <div class="uc-desc">フォルダやファイルごとに閲覧・編集できる人を細かく設定できる。機密情報の管理に有効。</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sec">
-      <p class="sec-title">TeamsチャネルとSharePointの関係</p>
-      <div style="background:var(--surface); border:0.5px solid var(--border2); border-radius:var(--radius-lg); padding:18px;">
-        <div style="display:grid; grid-template-columns:1fr 32px 1fr; gap:0; align-items:center;">
-          <div style="text-align:center; padding:16px; background:var(--bg); border-radius:var(--radius); border:0.5px solid var(--border2);">
-            <div style="font-size:20px; margin-bottom:6px;">📂</div>
-            <div style="font-size:13px; font-weight:700; color:#5059C9;">Teamsチャネル</div>
-            <div style="font-size:12px; color:var(--text2); margin-top:4px;">「共有済み」タブ</div>
-          </div>
-          <div style="text-align:center; font-size:18px; color:var(--text3);">⇄</div>
-          <div style="text-align:center; padding:16px; background:var(--bg); border-radius:var(--radius); border:0.5px solid var(--border2);">
-            <div style="font-size:20px; margin-bottom:6px;">🏛</div>
-            <div style="font-size:13px; font-weight:700; color:#036C70;">SharePoint</div>
-            <div style="font-size:12px; color:var(--text2); margin-top:4px;">チームサイト内のフォルダ</div>
-          </div>
-        </div>
-        <div class="note info" style="margin-top:12px;">💡 Teamsのチャネル「共有済み」タブに表示されているファイルは、実際にはSharePointに保存されています。どちらから操作しても同じファイルが変更されます。</div>
       </div>
     </div>
   </section>
@@ -1046,12 +1058,12 @@
             <strong>【特定のチャネルの通知を変更する】</strong><br>
             ① 対象チャネルの名前横にある「…」をクリック<br>
             ② 「チャネルの通知」を選択<br>
-            ③ 「すべてのアクティビティ」「@メンションのみ」「オフ」から選ぶ<br><br>
+            ③ 「アクティビティとバナーに表示」「アクティビティに表示」「オフ」から選ぶ<br><br>
             <strong>【全体の通知設定を変更する】</strong><br>
-            ① 右上のプロフィールアイコン →「設定」を開く<br>
-            ② 「通知」タブを選択<br>
+            ① 右上のプロフィールアイコン →「…」を開く<br>
+            ② 「通知とアクティビティ」タブを選択<br>
             ③ チャット・メンション・返信などカテゴリごとに通知方法を調整できる<br><br>
-            <div class="note info" style="margin-top:4px;">💡 重要なチャネルは「すべてのアクティビティ」、参考程度のチャネルは「@メンションのみ」に設定するのがおすすめです。</div>
+            <div class="note info" style="margin-top:4px;">💡 重要なチャネルは「アクティビティとバナーに表示」、参考程度のチャネルは「アクティビティに表示」に設定するのがおすすめです。</div>
           </div>
         </div>
       </div>
